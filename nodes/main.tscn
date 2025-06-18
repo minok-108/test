@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c47tc1ryfsqnd"]
+
+[ext_resource type="PackedScene" uid="uid://dj5p1s3pflimw" path="res://nodes/game.tscn" id="1_a3ry3"]
+[ext_resource type="PackedScene" uid="uid://l8uuq1tt6t10" path="res://nodes/ui.tscn" id="2_ufc4x"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Game" parent="." instance=ExtResource("1_a3ry3")]
+
+[node name="UI" parent="." instance=ExtResource("2_ufc4x")]

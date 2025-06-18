@@ -1,0 +1,93 @@
+[gd_scene load_steps=6 format=3 uid="uid://bj2xyhg4vvlts"]
+
+[ext_resource type="Script" uid="uid://ca5buuss4i2ud" path="res://scripts/finish_area.gd" id="1_ggcnp"]
+
+[sub_resource type="Animation" id="Animation_g1wdk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ggcnp"]
+resource_name = "show_win_label"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5o0xj"]
+_data = {
+&"RESET": SubResource("Animation_g1wdk"),
+&"show_win_label": SubResource("Animation_ggcnp")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g1wdk"]
+radius = 58.0
+height = 288.0
+
+[node name="FinishArea" type="Area2D"]
+script = ExtResource("1_ggcnp")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5o0xj")
+}
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 74)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_g1wdk")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -86.0
+offset_top = -69.0
+offset_right = 87.0
+offset_bottom = -19.0
+theme_override_font_sizes/font_size = 36
+text = "You did it!"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

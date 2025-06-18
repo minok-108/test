@@ -1,0 +1,262 @@
+[gd_scene load_steps=10 format=3 uid="uid://l8uuq1tt6t10"]
+
+[ext_resource type="Script" uid="uid://1qom3iffng5h" path="res://scripts/ui.gd" id="1_5lnhs"]
+[ext_resource type="Texture2D" uid="uid://bjsi63b0i5336" path="res://textures/tilemap-main.png" id="2_qwmkn"]
+
+[sub_resource type="Animation" id="Animation_itr28"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../ColorRect:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_rtdfn"]
+resource_name = "show_game_over"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5lnhs"]
+resource_name = "show_screen"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5lnhs"]
+_data = {
+&"RESET": SubResource("Animation_itr28"),
+&"show_game_over": SubResource("Animation_rtdfn"),
+&"show_screen": SubResource("Animation_5lnhs")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rd3pg"]
+atlas = ExtResource("2_qwmkn")
+region = Rect2(72, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6oha"]
+atlas = ExtResource("2_qwmkn")
+region = Rect2(108, 36, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_khow0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rd3pg")
+}],
+"loop": true,
+"name": &"have_hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6oha")
+}],
+"loop": true,
+"name": &"not_have_hp",
+"speed": 5.0
+}]
+
+[node name="UI" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_5lnhs")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../GameOver")
+libraries = {
+&"": SubResource("AnimationLibrary_5lnhs")
+}
+
+[node name="HPs" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 90.0
+offset_bottom = 18.0
+scale = Vector2(4, 4)
+
+[node name="AnimatedSprite1" type="AnimatedSprite2D" parent="HPs"]
+position = Vector2(9, 9)
+sprite_frames = SubResource("SpriteFrames_khow0")
+animation = &"have_hp"
+
+[node name="AnimatedSprite2" type="AnimatedSprite2D" parent="HPs"]
+position = Vector2(27, 9)
+sprite_frames = SubResource("SpriteFrames_khow0")
+animation = &"have_hp"
+
+[node name="AnimatedSprite3" type="AnimatedSprite2D" parent="HPs"]
+position = Vector2(45, 9)
+sprite_frames = SubResource("SpriteFrames_khow0")
+animation = &"have_hp"
+
+[node name="AnimatedSprite4" type="AnimatedSprite2D" parent="HPs"]
+position = Vector2(63, 9)
+sprite_frames = SubResource("SpriteFrames_khow0")
+animation = &"have_hp"
+
+[node name="AnimatedSprite5" type="AnimatedSprite2D" parent="HPs"]
+position = Vector2(81, 9)
+sprite_frames = SubResource("SpriteFrames_khow0")
+animation = &"have_hp"
+
+[node name="AnimatedSprite6" type="AnimatedSprite2D" parent="HPs"]
+position = Vector2(99, 9)
+sprite_frames = SubResource("SpriteFrames_khow0")
+animation = &"have_hp"
+
+[node name="AnimatedSprite7" type="AnimatedSprite2D" parent="HPs"]
+position = Vector2(117, 9)
+sprite_frames = SubResource("SpriteFrames_khow0")
+animation = &"have_hp"
+
+[node name="GameOver" type="Control" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.5
+offset_top = -58.0
+offset_right = 99.5
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Game over!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonAgain" type="Button" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 8.0
+offset_right = 120.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "Again"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="GameOver/ButtonAgain" to="." method="_on_button_again_pressed"]
